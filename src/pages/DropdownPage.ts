@@ -1,6 +1,6 @@
-import BasicAuthPage from 'src/pages/BasicAuthPage';
+import AuthPage from 'src/pages/AuthPage';
 
-class DropdownPage extends BasicAuthPage {
+class DropdownPage extends AuthPage {
 
     get profileLogOut() {
         return $('[ng-click="$ctrl.logout()"]');

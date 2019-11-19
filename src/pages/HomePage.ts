@@ -1,6 +1,6 @@
 import BasePage from 'src/pages/BasePage';
 
-export default class BasicAuthPage extends BasePage {
+export default class HomePage extends BasePage {
 
     get buttonMagnifier() {
         return $('.btn.flat-dark.icon-search');
@@ -15,22 +15,22 @@ export default class BasicAuthPage extends BasePage {
     }
 
     get buttonBasicFast() {
-        let xpath = String("//input[@id='checkbox-11']/parent::div");
+        const xpath = String("//input[@id='checkbox-11']/parent::div");
         return $(xpath);
     }
 
     get buttonCOLOR() {
-        let xpath = String("//input[@id='checkbox-11']/parent::div");
-        return $(xpath).getCSSProperty("backgroud-color");
+        const xpath = String("//input[@id='checkbox-11']/parent::div");
+        return $(xpath).getCSSProperty('backgroud-color');
     }
 
     get buttonBusiness() {
-        let xpath = String("//input[@id='checkbox-13']/parent::div");
+        const xpath = String("//input[@id='checkbox-13']/parent::div");
         return $(xpath);
     }
 
     get buttonOneSite() {
-        let xpath = String("//input[@id='checkbox-14']/parent::div");
+        const xpath = String("//input[@id='checkbox-14']/parent::div");
         return $(xpath);
     }
 
@@ -58,34 +58,34 @@ export default class BasicAuthPage extends BasePage {
         return $('.btn.flat-dark.ng-scope');
     }
 
-    // @ts-ignore
-    get profileUser() {
-        return $('.user-btn');
-    }
-
-    // @ts-ignore
-    get profileDropdown() {
-        return $('.dropdown-btn');
-    }
-
-    // @ts-ignore
-    get profileLogOut() {
-        return $('[ng-click="$ctrl.logout()"]');
-    }
-
-    clickLogOut() {
-        this.profileDropdown.click();
-        this.profileLogOut.click();
-    }
+    // // @ts-ignore
+    // get profileUser() {
+    //     return $('.user-btn');
+    // }
+    //
+    // // @ts-ignore
+    // get profileDropdown() {
+    //     return $('.dropdown-btn');
+    // }
+    //
+    // // @ts-ignore
+    // get profileLogOut() {
+    //     return $('[ng-click="$ctrl.logout()"]');
+    // }
+    //
+    // clickLogOut() {
+    //     this.profileDropdown.click();
+    //     this.profileLogOut.click();
+    // }
 
     get open() {
         return browser.url('/');
     }
 
-    get authPageIsOpened() {
-        this.profileUser.waitForDisplayed();
-        return this.profileUser.isDisplayed(), this.profileDropdown.isDisplayed();
-    }
+    // get authPageIsOpened() {
+    //     this.profileUser.waitForDisplayed();
+    //     return this.profileUser.isDisplayed(), this.profileDropdown.isDisplayed();
+    // }
 
     get basePageIsOpened() {
         this.loginButton.waitForDisplayed();

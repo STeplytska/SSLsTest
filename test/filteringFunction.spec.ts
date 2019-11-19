@@ -1,10 +1,10 @@
 import {expect} from 'chai';
-import BasicAuthPage from 'src/pages/BasicAuthPage';
+import HomePage from 'src/pages/HomePage';
 import SearchPage from 'src/pages/SearchPage';
 import Utils from 'src/Utils/Utils';
 
-describe('Home page. Checking filtering function', () => {
-    const basePage = new BasicAuthPage();
+describe('Home page. Checking filtering function. ', () => {
+    const basePage = new HomePage();
 
     it('after filtering should display only elements with required a parameter (Validation)', () => {
         basePage.clickButtonBasicFast();
@@ -27,16 +27,15 @@ describe('Home page. Checking filtering function', () => {
 
     it('filtering with used button magnifier', () => {
         basePage.clickButtonMagnifier();
-        expect(SearchPage.isOpened(), 'Base page was NOT opened').true;
+        expect(SearchPage.isOpened(), 'Home page was NOT opened').true;
         SearchPage.searchField.setValue('esse');
         expect(Utils.checkContains(SearchPage.filteredListProductCards,
             'ESSE'), 'Not all items match the filter').true;
     });
 
     beforeEach(() => {
-        console.log('RUN before test');
         basePage.open;
-        expect(basePage.basePageIsOpened, 'Base page was NOT opened').true;
+        expect(basePage.basePageIsOpened, 'Home page was NOT opened').true;
     });
 
     afterEach(() => {

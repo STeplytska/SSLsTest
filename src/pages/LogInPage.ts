@@ -1,5 +1,4 @@
 import BasePage from 'src/pages/BasePage';
-import list = Mocha.reporters.list;
 
 class LoginPage extends BasePage {
 
@@ -24,12 +23,10 @@ class LoginPage extends BasePage {
     }
 
     get forgot() {
-        // return $('button.link');
         return $('[click-and-disable=\'resetPassword(authForm)\']');
     }
 
     get boxErrorEmail() {
-        // $('div[class=left-tooltip-box]').waitForDisplayed();
         return $('div[class=left-tooltip-box]');
     }
 
@@ -58,7 +55,6 @@ class LoginPage extends BasePage {
 
     get isOpened() {
         this.submit.waitForDisplayed();
-        console.log('LOGIN TITLE: ' + this.pageTitle + '  ' + (this.pageTitle.includes('Authorization') && this.submit.isDisplayed()));
         return (this.pageTitle.includes('Authorization') && this.submit.isDisplayed());
     }
 }

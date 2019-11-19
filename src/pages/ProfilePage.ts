@@ -1,4 +1,4 @@
-import {usersProfile} from 'src/config/CreateUsers';
+import {usersProfile} from 'src/data/CreateUsers';
 import BasePage from 'src/pages/BasePage';
 
 class ProfilePage extends BasePage {
@@ -38,40 +38,23 @@ class ProfilePage extends BasePage {
         return $('button.toggle-btn');
     }
 
-    // get descriptionNewsletter() {
-    //     return $('span[ng-hide="activeRow === \'password\'"]');
-    // }
-
-    printText() {
-        console.log('printText:  ' + this.descriptionSupportPin.getText());
-    }
-
     isOpened() {
-        let newVar: boolean = this.title.includes('Profile')
+        const newVar: boolean = this.title.includes('Profile')
             && this.descriptionName.isDisplayedInViewport()
             && this.descriptionEmail.isDisplayedInViewport()
             && this.descriptionPassword.isDisplayedInViewport()
             && this.descriptionPhone.isDisplayedInViewport()
             && this.descriptionAddress.isDisplayedInViewport()
             && this.descriptionNewsletter.isDisplayed();
-        console.log(' !!! ' + this.title.includes('Profile') + ' !!! ' +
-            +' !!! ' + this.descriptionName.isDisplayedInViewport()
-            + ' !!! ' + this.descriptionEmail.isDisplayedInViewport()
-            + ' !!! ' + this.descriptionPassword.isDisplayedInViewport()
-            + ' !!! ' + this.descriptionPhone.isDisplayedInViewport()
-            + ' !!! ' + this.descriptionAddress.isDisplayedInViewport()
-            + ' !!! ' + this.descriptionNewsletter.isDisplayed());
-
         return newVar;
     }
 
     profileCurrent() {
-        let newVar = [this.descriptionName.getText(),
-            this.descriptionEmail.getText(),
-            this.descriptionPhone.getText(),
-            this.descriptionAddress.getText(),
-            this.descriptionNewsletter.getAttribute('class')];
-        return newVar;
+        return [this.descriptionName.getText(),
+                this.descriptionEmail.getText(),
+                this.descriptionPhone.getText(),
+                this.descriptionAddress.getText(),
+                this.descriptionNewsletter.getAttribute('class')];
     }
 
     compareValues() {

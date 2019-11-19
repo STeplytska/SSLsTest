@@ -1,71 +1,64 @@
 import {expect} from 'chai';
-import {userNotRegistered, validUser, inValidUser, userWithEmptyCredentials} from 'src/config/CreateUsers';
-import BasicAuthPage from 'src/pages/BasicAuthPage';
+import {inValidUser, userNotRegistered, userWithEmptyCredentials, validUser} from 'src/data/CreateUsers';
+import AuthPage from 'src/pages/AuthPage';
 import LoginPage from 'src/pages/LogInPage';
-import DropdownPage from 'src/pages/DropdownPage';
 import Utils from 'src/Utils/Utils';
 
 describe('Login page', () => {
-    const basePage = new BasicAuthPage();
+    const basePage = new AuthPage();
 
     it('should not allow access with empty credentials', () => {
-        console.log('START1');
         LoginPage.setCredentials(userWithEmptyCredentials.email, userWithEmptyCredentials.password);
         LoginPage.showPassword.click();
-        expect(LoginPage.password.getValue()).to.equals(userWithEmptyCredentials.password);
+        expect(LoginPage.password.getValue(),
+            'Password does not be displayed after click "eye" icon or does not match input value')
+                      .to.equals(userWithEmptyCredentials.password);
         LoginPage.submit.click();
-        expect(LoginPage.isOpened).true;
-        expect(LoginPage.boxErrorEmail.getText()).to.equals(userWithEmptyCredentials.message);
-        expect(LoginPage.boxErrorPassword.getText()).to.equals(userWithEmptyCredentials.messagePass);
+        expect(LoginPage.isOpened,'Login page was not opened').true;
+        expect(Utils.getTextFromBox(LoginPage.boxErrorEmail),
+            'Error message is not displayed or not match require1').to.equals(userWithEmptyCredentials.message);
+        expect(Utils.getTextFromBox(LoginPage.boxErrorPassword)).to.equals(userWithEmptyCredentials.messagePass,
+                                    'Error message is not displayed or not match require');
     });
 
     it('should not allow access not registered user', () => {
-        console.log('START2');
         LoginPage.loginWithCredentials(userNotRegistered.email, userNotRegistered.password);
-        expect(LoginPage.isOpened).true;
-        expect(LoginPage.boxNotyMessage.getText()).to.equals(userNotRegistered.message);
+        expect(LoginPage.isOpened, 'Login page was not opened').true;
+        expect(Utils.getTextFromBox(LoginPage.boxNotyMessage),
+            'Error message is not displayed or not match require').to.equals(userNotRegistered.message);
     });
 
     it('should allow access with correct credentials', () => {
-        console.log('START3');
         LoginPage.setCredentials(validUser.email, validUser.password);
         LoginPage.showPassword.click();
-        expect(LoginPage.password.getValue()).to.equals(validUser.password);
+        expect(LoginPage.password.getValue()).to.equals(validUser.password,
+            'Password does not be displayed after click "eye" icon or does not match input value');
         LoginPage.submit.click();
-        expect(basePage.authPageIsOpened).true;
+        expect(basePage.authPageIsOpened, 'Authorized page was not opened').true;
         expect(basePage.authPageIsOpened).exist;
-        expect(basePage.profileUser.getText()).to.equals(validUser.email);
-        expect(basePage.profileDropdown
-            .getAttribute('nc-dropdown-trigger')).to.equals('statusOpened');
+        expect(basePage.profileUser.getText()).to.equals(validUser.email, 'Does not match expected user name');
+        expect(basePage.profileDropdown.getAttribute('nc-dropdown-trigger'))
+                .to.equals('statusOpened', 'Dropdown was not opened');
         basePage.clickLogOut();
         expect(basePage.basePageIsOpened, 'Home page was not opened').true;
     });
 
-    beforeEach(() => {
-        console.log('RUN before test LOGIN');
-        basePage.open;
-        expect(basePage.basePageIsOpened, 'Home page was not opened').true;
-        basePage.loginButton.click();
-        expect(LoginPage.isOpened, 'Login page was not opened').true;
-    });
     it('should not allow access with invalid email', () => {
-        console.log('START4');
         expect(LoginPage.isOpened, 'Login page was not opened').true;
         LoginPage.loginWithCredentials(inValidUser.email, inValidUser.password);
         expect(LoginPage.isOpened, 'Login page was not opened').true;
-        expect(LoginPage.boxErrorEmail.getText()).to.equals(inValidUser.message);
+        expect(Utils.getTextFromBox(LoginPage.boxErrorEmail)).to.equals(inValidUser.message,
+                            'Error message is not displayed or not match require');
     });
 
     it('Log Out. Should redirected on authorization page', () => {
-        console.log('START5');
         Utils.loginToSite();
-        expect(basePage.authPageIsOpened).true;
+        expect(basePage.authPageIsOpened, 'Authorized page was not opened').true;
         basePage.clickLogOut();
-        expect(LoginPage.isOpened);
+        expect(LoginPage.isOpened, 'Home page was not opened');
     });
 
     beforeEach(() => {
-        console.log('RUN before test LOGIN');
         basePage.open;
         expect(basePage.basePageIsOpened, 'Home page was not opened').true;
         basePage.loginButton.click();
